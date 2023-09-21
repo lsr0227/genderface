@@ -3,20 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Application_1-LSR</title>
-
-        <!-- Shareaholic code-->
-        <link
-            rel="preload"
-            href="https://cdn.shareaholic.net/assets/pub/shareaholic.js"
-            as="script"
-        />
-        <meta name="shareaholic:site_id" content="e3ba0f8d5546bb2a8695130a98f7836f" />
-        <script
-            data-cfasync="false"
-            async
-            src="https://cdn.shareaholic.net/assets/pub/shareaholic.js"
-        ></script>
+        <title>AI 성별 테스트</title>
 
         <!-- Bootstrap-->
         <link
@@ -25,15 +12,32 @@
             integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
             crossorigin="anonymous"
         />
-
-        <link rel="stylesheet" href="style.css" />
-    </head>
+		<!-- Bootstrap -->
+    
+        <!-- BEGIN SHAREAHOLIC CODE -->
+        <link
+            rel="preload"
+            href="https://cdn.shareaholic.net/assets/pub/shareaholic.js"
+            as="script"
+        />
+        <meta name="shareaholic:site_id" content="706f19a8f768d6e289c70c6e875a3e92" />
+        <script
+            data-cfasync="false"
+            async
+            src="https://cdn.shareaholic.net/assets/pub/shareaholic.js"
+        ></script>
+        <!-- END SHAREAHOLIC CODE -->
+		
+		<meta name="naver-site-verification" content="b28ab0f6c35d3660c3eea0bbf358f4a4074fb34b" />
+		<link rel="stylesheet" href="style.css" />
+    
+	</head>
 
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-distance">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">내 얼굴 성별테스트</a>
-                <button
+                <a class="navbar-brand" href="#" onclick="resetLink()">내 얼굴 성별테스트</a>
+                <!-- <button
                     class="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
@@ -59,7 +63,7 @@
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </nav>
 
@@ -90,6 +94,7 @@
 
             <div class="image-upload-wrap">
                 <input
+					id = "file-input"
                     class="file-upload-input"
                     type="file"
                     onchange="readURL(this);"
@@ -104,24 +109,39 @@
             </div>
             <div class="file-upload-content">
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-                <p class="result-message"></p>
-                <div id="label-container"></div>
-                <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image">
-                        Remove <span class="image-title">Uploaded Image</span>
-                    </button>
+
+                <div id="loading" class="animated bounce">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                    <p class="mt-2 mb-1 text-center">AI가 당신의 얼굴을 분석중입니다.</p>
                 </div>
 				
-				<div class="shareaholic-canvas" data-app="follow_buttons" data-app-id="28690032"></div>
-            
-			</div>
+                <p class="result-message"></p>
+
+                <div id="label-container"></div>
+
+                <div class="image-title-wrap">
+                    <button class="remove-image" type="button" onclick="removeUpload()">
+                        재 시도 하기
+                        <!-- Remove <span class="image-title">Uploaded Image</span> -->
+                    </button>
+                </div>
+
+                <div
+                    class="shareaholic-canvas"
+                    data-app="follow_buttons"
+                    data-app-id="28690032"
+                ></div>
+            </div>
+
+            <div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144764"></div>
         </div>
 
         <div id="webcam-container"></div>
-        <div id="label-container"></div>
 
-		<div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144356"></div>
-		
+        <div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144356"></div>
+
         <div id="disqus_thread"></div>
 
         <script>
@@ -143,6 +163,7 @@
                 (d.head || d.body).appendChild(s);
             })();
         </script>
+
         <noscript
             >Please enable JavaScript to view the
             <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript
@@ -157,20 +178,42 @@
         ></script>
 
         <script>
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+            function resetLink() {
+                window.location.reload();
+            }
+        </script>
 
-                    reader.onload = function (e) {
-                        $('.image-upload-wrap').hide();
+        <script>
+			
+			var tempReader;
+			
+            function readURL(input) {
+				
+				
+				
+                if (input.files && input.files[0]) {
+					
+                    tempReader = new FileReader();
+
+                    tempReader.onload = function (e) {
+						
+						$('#loading').show();
+						$('#label-container').hide();
+						$('.result-message').hide();
+						
+                        $('.image-upload-wrap').hide();                       
                         $('.file-upload-image').attr('src', e.target.result);
                         $('.file-upload-content').show();
                         $('.image-title').html(input.files[0].name);
                     };
+					
 
-                    reader.readAsDataURL(input.files[0]);
+                    tempReader.readAsDataURL(input.files[0]);
 
                     init().then(() => {
+                        $('#loading').hide();
+						$('#label-container').show();
+						$('.result-message').show();
                         predict();
                     });
                 } else {
@@ -182,6 +225,10 @@
                 $('.file-upload-input').replaceWith($('.file-upload-input').clone());
                 $('.file-upload-content').hide();
                 $('.image-upload-wrap').show();
+                $('.image-upload-wrap').removeClass('image-dropping');
+
+				document.getElementById('file-input').value = "";
+				// document.getElementsByClassName('.file-upload-input').value = ""; class 이름으로 적용 시 동작오류
             }
             $('.image-upload-wrap').bind('dragover', function () {
                 $('.image-upload-wrap').addClass('image-dropping');
@@ -197,14 +244,16 @@
             // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
             // the link to your model provided by Teachable Machine export panel
-            const URL = 'https://teachablemachine.withgoogle.com/models/1LfKTDD3c/';
+
+            const TempURL = 'https://teachablemachine.withgoogle.com/models/1LfKTDD3c/';
 
             let model, webcam, labelContainer, maxPredictions;
+			var loopcnt = 0;
 
             // Load the image model and setup the webcam
             async function init() {
-                const modelURL = URL + 'model.json';
-                const metadataURL = URL + 'metadata.json';
+                const modelURL = TempURL + 'model.json';
+                const metadataURL = TempURL + 'metadata.json';
 
                 // load the model and metadata
                 // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
@@ -213,11 +262,17 @@
                 model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();
 
-                labelContainer = document.getElementById('label-container');
-                for (let i = 0; i < maxPredictions; i++) {
-                    // and class labels
-                    labelContainer.appendChild(document.createElement('div'));
-                }
+				if(loopcnt < 1) 
+				{
+					labelContainer = document.getElementById('label-container');
+
+					for (let i = 0; i < maxPredictions; i++) {
+						// and class labels
+						var element = document.createElement('div');
+						element.classList.add('_align');
+						labelContainer.appendChild(element);
+					}
+				}        
             }
 
             // run the webcam image through the image model
@@ -225,28 +280,62 @@
                 // predict can take in an image, video or canvas html element
                 var image = document.getElementById('face-image');
                 var resultMessage;
-                const prediction = await model.predict(image, false);
-                // prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+                var label, labelTitle, bar, barPercent, genderCSS, barWidth;
+				var labelId, barId;
 
-                switch (prediction[0].className) {
+                const prediction = await model.predict(image, false);
+                const gender = await model.predict(image, false);
+
+                gender.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+
+                switch (gender[0].className) {
                     case 'male':
-                        resultMessage = '남자';
+                        resultMessage = '당신! 남성적으로 생기셨군요?';
                         break;
 
                     case 'female':
-                        resultMessage = '여자';
+                        resultMessage = '당신! 여성적으로 생기셨군요?';
                         break;
 
                     default:
+                        resultMessage = '당신! 생기다 마셨네요';
                         break;
                 }
+
                 $('.result-message').html(resultMessage); //태그 안쪽의 내용을 넣은 jQuery문법
 
                 for (let i = 0; i < maxPredictions; i++) {
-                    const classPrediction =
-                        prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-                    labelContainer.childNodes[i].innerHTML = classPrediction;
+					
+                    labelTitle = prediction[i].className == 'male' ? '남성' : '여성';
+                    genderCSS = prediction[i].className == 'male' ? '_progress_male' : '_progress_female';
+					
+					barPercent = Math.round(prediction[i].probability.toFixed(2) * 100) + '%';
+                    barWidth = prediction[i].probability.toFixed(2) > 0.1 ? barPercent : '5%';
+							
+					labelId = 'labelId' + i;
+					barId = 'barId' + i;
+					
+					if(loopcnt < 1)
+					{
+						label = "<div id=" + labelId + " class = '_label'>" + labelTitle + '</div>';
+												
+						bar = "<div class = '_progressbar'><div id=" + barId + " class = '" + genderCSS + "'" +
+						"style = 'width: " + barWidth + "'>" + barPercent +
+						'</div></div>';
+						
+						labelContainer.childNodes[i].innerHTML = label + bar;										
+					}
+					else
+					{									
+						document.getElementById(labelId).innerHTML = labelTitle;
+						
+						document.getElementById(barId).innerHTML = barPercent;
+						$("#" + barId).css("width", barWidth);	
+					}	
+					                   
                 }
+				
+				loopcnt++;
             }
         </script>
     </body>
