@@ -12,8 +12,8 @@
             integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
             crossorigin="anonymous"
         />
-		<!-- Bootstrap -->
-    
+        <!-- Bootstrap -->
+
         <!-- BEGIN SHAREAHOLIC CODE -->
         <link
             rel="preload"
@@ -27,11 +27,10 @@
             src="https://cdn.shareaholic.net/assets/pub/shareaholic.js"
         ></script>
         <!-- END SHAREAHOLIC CODE -->
-		
-		<meta name="naver-site-verification" content="b28ab0f6c35d3660c3eea0bbf358f4a4074fb34b" />
-		<link rel="stylesheet" href="style.css" />
-    
-	</head>
+
+        <meta name="naver-site-verification" content="b28ab0f6c35d3660c3eea0bbf358f4a4074fb34b" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary nav-distance">
@@ -94,7 +93,7 @@
 
             <div class="image-upload-wrap">
                 <input
-					id = "file-input"
+                    id="file-input"
                     class="file-upload-input"
                     type="file"
                     onchange="readURL(this);"
@@ -116,7 +115,7 @@
                     </div>
                     <p class="mt-2 mb-1 text-center">AI가 당신의 얼굴을 분석중입니다.</p>
                 </div>
-				
+
                 <p class="result-message"></p>
 
                 <div id="label-container"></div>
@@ -141,6 +140,18 @@
         <div id="webcam-container"></div>
 
         <div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144356"></div>
+
+		<div class = "ad-banner">
+			<ins
+            class="kakao_ad_area"
+            style="display: none;"
+            data-ad-unit="DAN-Tcry3kvpLfNKoMt0"
+            data-ad-width="320"
+            data-ad-height="100"
+        	></ins>
+		</div>     
+		
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
         <div id="disqus_thread"></div>
 
@@ -184,36 +195,29 @@
         </script>
 
         <script>
-			
-			var tempReader;
-			
+            var tempReader;
+
             function readURL(input) {
-				
-				
-				
                 if (input.files && input.files[0]) {
-					
                     tempReader = new FileReader();
 
                     tempReader.onload = function (e) {
-						
-						$('#loading').show();
-						$('#label-container').hide();
-						$('.result-message').hide();
-						
-                        $('.image-upload-wrap').hide();                       
+                        $('#loading').show();
+                        $('#label-container').hide();
+                        $('.result-message').hide();
+
+                        $('.image-upload-wrap').hide();
                         $('.file-upload-image').attr('src', e.target.result);
                         $('.file-upload-content').show();
                         $('.image-title').html(input.files[0].name);
                     };
-					
 
                     tempReader.readAsDataURL(input.files[0]);
 
                     init().then(() => {
                         $('#loading').hide();
-						$('#label-container').show();
-						$('.result-message').show();
+                        $('#label-container').show();
+                        $('.result-message').show();
                         predict();
                     });
                 } else {
@@ -227,8 +231,8 @@
                 $('.image-upload-wrap').show();
                 $('.image-upload-wrap').removeClass('image-dropping');
 
-				document.getElementById('file-input').value = "";
-				// document.getElementsByClassName('.file-upload-input').value = ""; class 이름으로 적용 시 동작오류
+                document.getElementById('file-input').value = '';
+                // document.getElementsByClassName('.file-upload-input').value = ""; class 이름으로 적용 시 동작오류
             }
             $('.image-upload-wrap').bind('dragover', function () {
                 $('.image-upload-wrap').addClass('image-dropping');
@@ -248,7 +252,7 @@
             const TempURL = 'https://teachablemachine.withgoogle.com/models/1LfKTDD3c/';
 
             let model, webcam, labelContainer, maxPredictions;
-			var loopcnt = 0;
+            var loopcnt = 0;
 
             // Load the image model and setup the webcam
             async function init() {
@@ -262,17 +266,16 @@
                 model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();
 
-				if(loopcnt < 1) 
-				{
-					labelContainer = document.getElementById('label-container');
+                if (loopcnt < 1) {
+                    labelContainer = document.getElementById('label-container');
 
-					for (let i = 0; i < maxPredictions; i++) {
-						// and class labels
-						var element = document.createElement('div');
-						element.classList.add('_align');
-						labelContainer.appendChild(element);
-					}
-				}        
+                    for (let i = 0; i < maxPredictions; i++) {
+                        // and class labels
+                        var element = document.createElement('div');
+                        element.classList.add('_align');
+                        labelContainer.appendChild(element);
+                    }
+                }
             }
 
             // run the webcam image through the image model
@@ -281,7 +284,7 @@
                 var image = document.getElementById('face-image');
                 var resultMessage;
                 var label, labelTitle, bar, barPercent, genderCSS, barWidth;
-				var labelId, barId;
+                var labelId, barId;
 
                 const prediction = await model.predict(image, false);
                 const gender = await model.predict(image, false);
@@ -305,37 +308,41 @@
                 $('.result-message').html(resultMessage); //태그 안쪽의 내용을 넣은 jQuery문법
 
                 for (let i = 0; i < maxPredictions; i++) {
-					
                     labelTitle = prediction[i].className == 'male' ? '남성' : '여성';
-                    genderCSS = prediction[i].className == 'male' ? '_progress_male' : '_progress_female';
-					
-					barPercent = Math.round(prediction[i].probability.toFixed(2) * 100) + '%';
+                    genderCSS =
+                        prediction[i].className == 'male' ? '_progress_male' : '_progress_female';
+
+                    barPercent = Math.round(prediction[i].probability.toFixed(2) * 100) + '%';
                     barWidth = prediction[i].probability.toFixed(2) > 0.1 ? barPercent : '5%';
-							
-					labelId = 'labelId' + i;
-					barId = 'barId' + i;
-					
-					if(loopcnt < 1)
-					{
-						label = "<div id=" + labelId + " class = '_label'>" + labelTitle + '</div>';
-												
-						bar = "<div class = '_progressbar'><div id=" + barId + " class = '" + genderCSS + "'" +
-						"style = 'width: " + barWidth + "'>" + barPercent +
-						'</div></div>';
-						
-						labelContainer.childNodes[i].innerHTML = label + bar;										
-					}
-					else
-					{									
-						document.getElementById(labelId).innerHTML = labelTitle;
-						
-						document.getElementById(barId).innerHTML = barPercent;
-						$("#" + barId).css("width", barWidth);	
-					}	
-					                   
+
+                    labelId = 'labelId' + i;
+                    barId = 'barId' + i;
+
+                    if (loopcnt < 1) {
+                        label = '<div id=' + labelId + " class = '_label'>" + labelTitle + '</div>';
+
+                        bar =
+                            "<div class = '_progressbar'><div id=" +
+                            barId +
+                            " class = '" +
+                            genderCSS +
+                            "'" +
+                            "style = 'width: " +
+                            barWidth +
+                            "'>" +
+                            barPercent +
+                            '</div></div>';
+
+                        labelContainer.childNodes[i].innerHTML = label + bar;
+                    } else {
+                        document.getElementById(labelId).innerHTML = labelTitle;
+
+                        document.getElementById(barId).innerHTML = barPercent;
+                        $('#' + barId).css('width', barWidth);
+                    }
                 }
-				
-				loopcnt++;
+
+                loopcnt++;
             }
         </script>
     </body>
