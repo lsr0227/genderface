@@ -291,9 +291,40 @@ transition: all .2s ease;
 	border-radius : 10px;
 }
 
-.ad-banner {
-	width: 320px;
+/* Advertisement */
+
+.layout-main {
+	display: flex;
+}
+
+.layout-main .layout-left {
+	display: flex;
+	align-items: center;
 	margin: 0 auto;
 }
+
+.layout-main .layout-right {
+	display : flex;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.ad-side-left-banner {
+	margin: 0 auto;
+	width: 160px;
+}
+
+.ad-side-right-banner {
+	margin: 0 auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 250px;
+}
+
+.ad-bottom-banner1 {	
+	margin: 0 auto;
+	width: 320px;
+}
+	
 
 

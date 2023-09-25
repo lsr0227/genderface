@@ -82,75 +82,119 @@
             class="jsbin"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
-        <div class="file-upload container">
-            <!-- <button
-                class="file-upload-btn"
-                type="button"
-                onclick="$('.file-upload-input').trigger( 'click' )"
-            >
-                Add Image
-            </button> -->
 
-            <div class="image-upload-wrap">
-                <input
-                    id="file-input"
-                    class="file-upload-input"
-                    type="file"
-                    onchange="readURL(this);"
-                    accept="image/*"
-                />
-                <div class="drag-text">
-                    <img src="image/upload.svg" class="upload mt-5 pt-5" />
-                    <h3 class="upload-text pt-4 mb-5 pb-5">
-                        얼굴 사진을 올려놓거나 눌러서 업로드 하세요!
-                    </h3>
-                </div>
+        <div class = "layout-main">
+			<div class = "layout-left">			
+				<aside class = ad-side-left-banner1-long>			
+					<ins class="kakao_ad_area" style="display:none;"
+						data-ad-unit = "DAN-jlNhPpnpdnpQEv1f"
+						data-ad-width = "160"
+						data-ad-height = "600"></ins>
+					<script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+				</aside>			
             </div>
-            <div class="file-upload-content">
-                <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-
-                <div id="loading" class="animated bounce">
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only"></span>
+			
+            <section class="file-upload container">
+                <div class="image-upload-wrap">
+                    <input
+                        id="file-input"
+                        class="file-upload-input"
+                        type="file"
+                        onchange="readURL(this);"
+                        accept="image/*"
+                    />
+                    <div class="drag-text">
+                        <img src="image/upload.svg" class="upload mt-5 pt-5" />
+                        <h3 class="upload-text pt-4 mb-5 pb-5">
+                            얼굴 사진을 올려놓거나 눌러서 업로드 하세요!
+                        </h3>
                     </div>
-                    <p class="mt-2 mb-1 text-center">AI가 당신의 얼굴을 분석중입니다.</p>
                 </div>
 
-                <p class="result-message"></p>
+                <div class="file-upload-content">
+                    <img class="file-upload-image" id="face-image" src="#" alt="your image" />
 
-                <div id="label-container"></div>
+                    <div id="loading" class="animated bounce">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                        <p class="mt-2 mb-1 text-center">AI가 당신의 얼굴을 분석중입니다.</p>
+                    </div>
 
-                <div class="image-title-wrap">
-                    <button class="remove-image" type="button" onclick="removeUpload()">
-                        재 시도 하기
-                        <!-- Remove <span class="image-title">Uploaded Image</span> -->
-                    </button>
+                    <p class="result-message"></p>
+
+                    <div id="label-container"></div>
+
+                    <div class="image-title-wrap">
+                        <button class="remove-image" type="button" onclick="removeUpload()">
+                            재 시도 하기
+                        </button>
+                    </div>
+
+                    <div
+                        class="shareaholic-canvas"
+                        data-app="follow_buttons"
+                        data-app-id="28690032"
+                    ></div>
                 </div>
 
                 <div
                     class="shareaholic-canvas"
-                    data-app="follow_buttons"
-                    data-app-id="28690032"
+                    data-app="share_buttons"
+                    data-app-id="33144764"
                 ></div>
-            </div>
+			</section>
+			
+			<aside class = "layout-right">
+				<div>								
+					 <div class="ad-side-right-banner">
+						<ins
+							class="kakao_ad_area"
+							style="display: none;"
+							data-ad-unit="DAN-A4qb2GeqMaLzsPvo"
+							data-ad-width="250"
+							data-ad-height="250"
+						></ins>
+						<script
+							type="text/javascript"
+							src="//t1.daumcdn.net/kas/static/ba.min.js"
+							async
+						></script>
+					</div>
 
-            <div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144764"></div>
+
+					<div class="ad-side-right-banner">
+						<ins
+							class="kakao_ad_area"
+							style="display: none;"
+							data-ad-unit="DAN-dQXmk5h75X2bkmGX"
+							data-ad-width="250"
+							data-ad-height="250"
+						></ins>
+						<script
+							type="text/javascript"
+							src="//t1.daumcdn.net/kas/static/ba.min.js"
+							async
+						></script>
+					</div>
+				</div>
+			</aside>
         </div>
 
         <div id="webcam-container"></div>
 
         <div class="shareaholic-canvas" data-app="share_buttons" data-app-id="33144356"></div>
 
-		<div class = "ad-banner">
-			<ins
-            class="kakao_ad_area"
-            style="display: none;"
-            data-ad-unit="DAN-Tcry3kvpLfNKoMt0"
-            data-ad-width="320"
-            data-ad-height="100"
-        	></ins>
-		</div>     
-		
+        <div class="ad-bottom-banner1">
+            <ins
+                class="kakao_ad_area"
+                style="display: none;"
+                data-ad-unit="DAN-Tcry3kvpLfNKoMt0"
+                data-ad-width="320"
+                data-ad-height="100"
+            ></ins>
+        </div>
+
         <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
         <div id="disqus_thread"></div>
